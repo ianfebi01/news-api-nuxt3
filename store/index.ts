@@ -6,8 +6,10 @@ export const useNewsStore = defineStore("news", () => {
   const newsReaded = ref<NewsData[]>([]);
 
   const addNewsReaded = (data: NewsData) => {
-    newsReaded.value.push(data);
-    console.log(newsReaded);
+    const index = newsReaded.value.findIndex((item) => item.url === data.url);
+    if (index === -1) {
+      newsReaded.value.push(data);
+    }
   };
   return {
     newsDatas,
