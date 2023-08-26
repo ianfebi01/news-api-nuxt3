@@ -1,19 +1,27 @@
-import { defineStore } from "pinia";
-import { NewsData } from "~/types/news";
+import { defineStore } from 'pinia'
+import { NewsData } from '~/types/news'
 
-export const useNewsStore = defineStore("news", () => {
-  const newsDatas = ref<NewsData[]>();
-  const newsReaded = ref<NewsData[]>([]);
+export const useNewsStore = defineStore(
+  'news',
+  () => {
+    const newsDatas = ref<NewsData[]>()
+    const newsReaded = ref<NewsData[]>([])
 
-  const addNewsReaded = (data: NewsData) => {
-    const index = newsReaded.value.findIndex((item) => item.url === data.url);
-    if (index === -1) {
-      newsReaded.value.push(data);
+    const addNewsReaded = (data: NewsData) => {
+      const index = newsReaded.value.findIndex((item) => item.url === data.url)
+      if (index === -1) {
+        newsReaded.value.push(data)
+      }
     }
-  };
-  return {
-    newsDatas,
-    newsReaded,
-    addNewsReaded,
-  };
-});
+    return {
+      newsDatas,
+      newsReaded,
+      addNewsReaded,
+    }
+  },
+  {
+    persist: {
+      storage: persistedState.localStorage,
+    },
+  }
+)
