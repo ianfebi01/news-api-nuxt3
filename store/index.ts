@@ -6,6 +6,7 @@ export const useNewsStore = defineStore(
   () => {
     const newsDatas = ref<NewsData[]>()
     const newsReaded = ref<NewsData[]>([])
+    const search = ref<string>('Apple')
 
     const addNewsReaded = (data: NewsData) => {
       const index = newsReaded.value.findIndex((item) => item.url === data.url)
@@ -16,12 +17,14 @@ export const useNewsStore = defineStore(
     return {
       newsDatas,
       newsReaded,
+      search,
       addNewsReaded,
     }
   },
   {
     persist: {
       storage: persistedState.localStorage,
+      paths: ['newsReaded'],
     },
   }
 )

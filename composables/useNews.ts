@@ -1,3 +1,5 @@
+import moment from 'moment'
+import { storeToRefs } from 'pinia'
 import { URLSearchParams } from 'url'
 import { useNewsStore } from '~/store'
 import { GetNewsResponseAPI } from '~/types/news'
@@ -9,24 +11,32 @@ interface Params {
   apiKey?: string | undefined
 }
 
-const apiKey: string = 'ff34775aec394cd0a4ade64951ab81eb'
-// `/api-web/v2/top-headlines?country=id&apiKey=${apiKey}`,
-
-export const useNews = async (search: string = 'Apple') => {
+export const useNews = () => {
   // define store
   const newsStore = useNewsStore()
-  return $fetch<GetNewsResponseAPI>(
-    `/api/v2/everything?q=${search}&from=2023-07-26&sortBy=popularity`,
-    {
-      method: 'GET',
-    }
-  )
-    .then((res) => {
-      newsStore.newsDatas = res.articles
-      return true
-    })
-    .catch((err) => {
-      console.log(err)
-      return false
-    })
+  const { search } = storeToRefs(newsStore)
+
+  const date = new Date()
+  const month = date.getMonth() - 1
+  const day = date.getDate() + 1
+  date.setMonth(month)
+  date.setDate(day)
+  const from = moment(date).format('DD-mm-yy')
+
+  return $fetch(`/api/v2/everything`, {
+    query: {
+      q: search.value || '',
+      from,
+      sortBy: 'popularity',
+    },
+    method: 'GET',
+    onResponse: ({ response }) => {
+      newsStore.newsDatas = response?._data.articles
+    },
+    onRequest: () => {
+      newsStore.newsDatas = []
+    },
+    server: false,
+  })
+  // })
 }
