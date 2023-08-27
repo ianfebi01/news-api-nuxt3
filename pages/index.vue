@@ -58,7 +58,7 @@ const datas = computed(() => {
           class="h-full grid grid-rows-2 gap-4"
         >
           <div
-            class="grid grid-rows-2 grid-cols-10 gap-4 max-h-[45vh] lg:max-h-[60vh]"
+            class="grid grid-rows-2 grid-cols-10 gap-4 max-h-[45vh] lg:max-h-[80vh]"
           >
             <!-- 0 -->
             <MoleculesBigCard :datas="item[0]" />
