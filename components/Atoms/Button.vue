@@ -5,6 +5,7 @@
     class="cursor-pointer font-medium border border-none rounded-[8px] bg-[#55BDB3] inline-block text-white px-6 py-2 text-14 hover:brightness-95 transition-all duration-300 ease-in-out"
     @click="onClick"
     :style="style"
+    :disabled="disabled"
   >
     {{ label }}
   </button>
@@ -32,8 +33,9 @@ const props = withDefaults(
      */
     color?: string
     type?: 'button' | 'submit' | 'reset' | undefined
+    disabled?: boolean
   }>(),
-  { primary: false, color: '#55BDB3', type: 'button' }
+  { primary: false, color: '#55BDB3', type: 'button', disabled: false }
 )
 
 const emit = defineEmits<{
@@ -42,6 +44,7 @@ const emit = defineEmits<{
 
 const classes = computed(() => ({
   [`button--${props.size || 'medium'}`]: true,
+  ['brightness-50 hover:brightness-50 cursor-default']: props.disabled,
 }))
 
 const style = computed(() => {

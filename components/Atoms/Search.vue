@@ -49,6 +49,7 @@ const searchField = defineInputBinds('search')
         color="#0F2435"
         :primary="true"
         type="submit"
+        :disabled="errors.search === 'Search is a required field'"
       />
     </form>
     <span
