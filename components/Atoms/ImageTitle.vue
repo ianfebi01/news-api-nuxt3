@@ -25,7 +25,7 @@ const props = defineProps<Props>()
         </p>
         <div class="border-r-[0.5px] border-white h-[10px]"></div>
         <p class="text-white font-normal text-10 truncate">
-          {{ moment(datas.publishedAt).format('dddd, DD MMM YY') }}
+          {{ moment(datas.publishedAt).format('dddd, DD MMMM YY') }}
         </p>
       </div>
     </div>
